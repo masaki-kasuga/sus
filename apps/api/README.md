@@ -32,3 +32,7 @@ docker compose -f docker-compose.yml up -d
 ## Environment
 
 Create `.env` for local npm and `.env.dev`/`.env.prod` for compose based on `example.env`.
+
+## Version History
+
+- **v1.1.0**: Added comprehensive CI/CD automation and documentation
