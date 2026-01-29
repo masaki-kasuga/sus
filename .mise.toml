@@ -43,3 +43,7 @@ run = "cd deployment/dashboard && docker compose -f docker-compose.prod.yml up -
 [tasks.docker-down]
 description = "Stop all Docker containers"
 run = "cd deployment/dashboard && docker compose -f docker-compose.dev.yml down || docker compose -f docker-compose.prod.yml down"
+
+[tasks.deploy-pi]
+description = "Deploy to Raspberry Pi"
+run = "cd deployment/dashboard/scripts && ./deploy_pi.sh"

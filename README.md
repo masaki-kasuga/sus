@@ -191,6 +191,22 @@ Test production builds locally:
 make docker-prod
 ```
 
+## 🚀 Deployment to Raspberry Pi
+
+Deploy to Raspberry Pi with a single command:
+
+```bash
+make deploy-pi
+```
+
+This will:
+- Build frontend and backend locally
+- Upload files to your Raspberry Pi via SSH
+- Install production dependencies
+- Restart services
+
+See [Deployment Guide](deployment/dashboard/README.md#deployment-to-raspberry-pi) for detailed instructions.
+
 ## 📋 Available Make Commands
 
 Run `make help` to see all available commands:
