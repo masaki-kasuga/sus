@@ -12,14 +12,13 @@ updates:
       prefix: "chore"
       include: "scope"
 
-  # API dependencies
+  # Monorepo npm dependencies (root manages all workspaces)
   - package-ecosystem: "npm"
-    directory: "/apps/api"
+    directory: "/"
     schedule:
       interval: "weekly"
     labels:
       - "dependencies"
-      - "api"
     commit-message:
       prefix: "chore"
       include: "scope"
@@ -27,19 +26,24 @@ updates:
       # Ignore major version updates for now
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
-
-  # Dashboard dependencies
-  - package-ecosystem: "npm"
-    directory: "/apps/dashboard"
-    schedule:
-      interval: "weekly"
-    labels:
-      - "dependencies"
-      - "dashboard"
-    commit-message:
-      prefix: "chore"
-      include: "scope"
-    ignore:
-      # Ignore major version updates for now
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major"]
+    groups:
+      # Group all dev dependencies together
+      dev-dependencies:
+        dependency-type: "development"
+      # Group production dependencies by workspace
+      api-dependencies:
+        patterns:
+          - "express*"
+          - "pg"
+          - "ws"
+          - "cors"
+          - "helmet"
+          - "compression"
+          - "dotenv"
+      dashboard-dependencies:
+        patterns:
+          - "react*"
+          - "@nivo/*"
+          - "recharts"
+          - "axios"
+          - "vite"
