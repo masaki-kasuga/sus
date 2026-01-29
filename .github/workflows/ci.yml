@@ -24,7 +24,7 @@ jobs:
 
       - name: Install API dependencies
         working-directory: apps/api
-        run: npm ci
+        run: npm ci --workspaces=false
 
       - name: Lint API
         working-directory: apps/api
@@ -36,7 +36,7 @@ jobs:
 
       - name: Install Dashboard dependencies
         working-directory: apps/dashboard
-        run: npm ci
+        run: npm ci --workspaces=false
 
       - name: Lint Dashboard
         working-directory: apps/dashboard
