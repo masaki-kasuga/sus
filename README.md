@@ -28,11 +28,75 @@ sustainability/
 
 ## 🚀 Getting Started
 
-Refer to the README of each project.
+### Prerequisites
+
+- Node.js 20.x or later
+- npm 10.x or later
+
+### Installation
+
+Install all dependencies for all workspaces:
+
+```bash
+npm install
+```
+
+### Development
+
+Run individual applications:
+
+```bash
+# API development server
+npm run dev --workspace=apps/api
+
+# Dashboard development server
+npm run dev --workspace=apps/dashboard
+```
+
+### Building
+
+Build all applications:
+
+```bash
+npm run build
+```
+
+Or build individually:
+
+```bash
+npm run build:api
+npm run build:dashboard
+```
+
+### Linting
+
+Lint all workspaces:
+
+```bash
+npm run lint
+```
+
+Or lint individually:
+
+```bash
+npm run lint:api
+npm run lint:dashboard
+```
 
 ## 📦 Package Management
 
-This monorepo manages multiple packages centrally.
+This monorepo uses **npm workspaces** to manage multiple packages efficiently:
+
+- **Shared dependencies** are installed once at the root
+- **Workspace-specific dependencies** are isolated per package
+- **No need for `--workspaces=false` flags** - everything just works!
+
+### Why Workspaces?
+
+✅ **Efficiency**: Common dependencies like TypeScript and ESLint are installed once  
+✅ **Consistency**: All packages use the same version of shared tools  
+✅ **Simplicity**: Single `npm install` command for the entire project  
+✅ **Speed**: Faster CI/CD with better caching
 
 ## Release & Versioning
 

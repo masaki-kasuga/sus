@@ -1,0 +1,49 @@
+version: 2
+updates:
+  # GitHub Actions dependencies
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+
+  # Monorepo npm dependencies (root manages all workspaces)
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    ignore:
+      # Ignore major version updates for now
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    groups:
+      # Group all dev dependencies together
+      dev-dependencies:
+        dependency-type: "development"
+      # Group production dependencies by workspace
+      api-dependencies:
+        patterns:
+          - "express*"
+          - "pg"
+          - "ws"
+          - "cors"
+          - "helmet"
+          - "compression"
+          - "dotenv"
+      dashboard-dependencies:
+        patterns:
+          - "react*"
+          - "@nivo/*"
+          - "recharts"
+          - "axios"
+          - "vite"

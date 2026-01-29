@@ -309,11 +309,13 @@ const WasteTabSelector = ({
   selectedTab?: string;
   onSelect: (tab: string) => void;
 }) => {
+  const highlightGroupId = useId();
+  const highlightLayoutId = `${highlightGroupId}-highlight`;
+  
   if (!options.length) {
     return null;
   }
-  const highlightGroupId = useId();
-  const highlightLayoutId = `${highlightGroupId}-highlight`;
+  
   const tabCount = Math.max(options.length, 1);
   const activeTab =
     selectedTab && options.includes(selectedTab) ? selectedTab : options[0];
