@@ -1,6 +1,6 @@
 {
   "name": "waste-backend",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Miyoshi Factory Waste Management Backend",
   "type": "module",
   "main": "dist/server.js",
