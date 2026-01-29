@@ -1,10 +1,15 @@
 services:
   backend:
-    build:
-      context: ../../apps/api
-      dockerfile: Dockerfile
+    image: node:20-alpine
+    working_dir: /app
     env_file:
       - ../../apps/api/.env.prod
+    volumes:
+      - ../../apps/api/dist:/app/dist:ro
+      - ../../apps/api/data:/app/data:ro
+      - ../../apps/api/package.json:/app/package.json:ro
+      - ../../apps/api/package-lock.json:/app/package-lock.json:ro
+    command: ["sh", "-c", "npm ci --omit=dev && node dist/server.js"]
     ports:
       - "3000:3000"
     networks:
@@ -16,6 +21,9 @@ services:
       timeout: 2s
       retries: 20
       start_period: 10s
+    depends_on:
+      postgres:
+        condition: service_healthy
 
   # フロントはビルドしてdistをホストに出す専用（常駐しない）
   frontend_build:

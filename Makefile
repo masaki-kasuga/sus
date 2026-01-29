@@ -137,18 +137,6 @@ test: ## Run tests (placeholder)
 ci: lint build ## Run CI checks locally
 	@echo "$(GREEN)✓ All CI checks passed$(NC)"
 
-##@ Database
-
-db-migrate: ## Run database migrations
-	@echo "$(BLUE)Running migrations...$(NC)"
-	cd apps/api && npm run migrate
-	@echo "$(GREEN)✓ Migrations complete$(NC)"
-
-db-seed: ## Seed database with sample data
-	@echo "$(BLUE)Seeding database...$(NC)"
-	cd apps/api && npm run seed
-	@echo "$(GREEN)✓ Database seeded$(NC)"
-
 ##@ Deployment
 
 deploy-pi: ## Deploy to Raspberry Pi (interactive)

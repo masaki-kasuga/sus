@@ -9,9 +9,7 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "lint": "eslint src --ext .ts",
-    "audit": "npm audit --audit-level=moderate",
-    "migrate": "tsx scripts/migrate.ts",
-    "seed": "tsx scripts/migrate.ts"
+    "audit": "npm audit --audit-level=moderate"
   },
   "keywords": [
     "waste",
