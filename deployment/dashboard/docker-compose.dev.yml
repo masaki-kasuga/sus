@@ -1,12 +1,15 @@
 services:
   backend:
     build:
-      context: ../../../apps/api
-      dockerfile: Dockerfile
+      context: ../../apps/api
+      dockerfile: Dockerfile.dev
     env_file:
-      - ../../../apps/api/.env.prod
+      - ../../apps/api/.env.dev
     ports:
       - "3000:3000"
+    volumes:
+      - ../../apps/api/src:/app/src
+      - ../../apps/api/data:/app/data
     networks:
       - waste-network
     restart: unless-stopped
@@ -17,29 +20,21 @@ services:
       retries: 20
       start_period: 10s
 
-  # フロントはビルドしてdistをホストに出す専用（常駐しない）
-  frontend_build:
+  frontend:
     build:
-      context: ../../../apps/dashboard
-      dockerfile: Dockerfile
-    environment:
-      - VITE_API_TARGET=/api
-    volumes:
-      - ../../../apps/dashboard/dist:/app/dist
-    command: ["sh", "-lc", "npm ci && npm run build"]
-    networks:
-      - waste-network
-
-  nginx:
-    image: nginx:1.25-alpine
-    depends_on:
-      backend:
-        condition: service_healthy
+      context: ../../apps/dashboard
+      dockerfile: Dockerfile.dev
     ports:
-      - "8080:8080"
+      - "5173:5173"
+    environment:
+      - VITE_API_TARGET=http://backend:3000
     volumes:
-      - ../nginx/waste-dashboard.docker.conf:/etc/nginx/conf.d/default.conf:ro
-      - ../../../apps/dashboard/dist:/usr/share/nginx/html:ro
+      - ../../apps/dashboard/src:/app/src
+      - ../../apps/dashboard/public:/app/public
+      - ../../apps/dashboard/index.html:/app/index.html
+      - ../../apps/dashboard/vite.config.ts:/app/vite.config.ts
+    depends_on:
+      - backend
     networks:
       - waste-network
     restart: unless-stopped
@@ -65,7 +60,7 @@ services:
     environment:
       PGPASSWORD: postgres
     volumes:
-      - ../postgres/init:/seed:ro
+      - ./postgres/init:/seed:ro
     networks:
       - waste-network
     entrypoint: ["bash", "-lc"]

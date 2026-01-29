@@ -80,48 +80,48 @@ build-dashboard: ## Build Dashboard only
 
 docker-dev: ## Start development environment with Docker Compose
 	@echo "$(BLUE)Starting development environment...$(NC)"
-	cd deployment/dev && docker compose up -d
+	cd deployment/dashboard && docker compose -f docker-compose.dev.yml up -d
 	@echo "$(GREEN)✓ Development environment started$(NC)"
 	@echo "$(YELLOW)API: http://localhost:3000$(NC)"
 	@echo "$(YELLOW)Dashboard: http://localhost:5173$(NC)"
 	@echo "$(YELLOW)PostgreSQL: localhost:5432$(NC)"
 
 docker-dev-logs: ## View development environment logs
-	cd deployment/dev && docker compose logs -f
+	cd deployment/dashboard && docker compose -f docker-compose.dev.yml logs -f
 
 docker-dev-build: ## Rebuild development Docker images
 	@echo "$(BLUE)Rebuilding development images...$(NC)"
-	cd deployment/dev && docker compose build --no-cache
+	cd deployment/dashboard && docker compose -f docker-compose.dev.yml build --no-cache
 	@echo "$(GREEN)✓ Development images rebuilt$(NC)"
 
 ##@ Docker - Production
 
 docker-prod: ## Start production environment with Docker Compose
 	@echo "$(BLUE)Starting production environment...$(NC)"
-	cd deployment/dashboard/compose && docker compose -f docker-compose.prod.yml up -d
+	cd deployment/dashboard && docker compose -f docker-compose.prod.yml up -d
 	@echo "$(GREEN)✓ Production environment started$(NC)"
-	@echo "$(YELLOW)Dashboard: http://localhost:80$(NC)"
+	@echo "$(YELLOW)Dashboard: http://localhost:8080$(NC)"
 
 docker-prod-logs: ## View production environment logs
-	cd deployment/dashboard/compose && docker compose -f docker-compose.prod.yml logs -f
+	cd deployment/dashboard && docker compose -f docker-compose.prod.yml logs -f
 
 docker-prod-build: ## Rebuild production Docker images
 	@echo "$(BLUE)Rebuilding production images...$(NC)"
-	cd deployment/dashboard/compose && docker compose -f docker-compose.prod.yml build --no-cache
+	cd deployment/dashboard && docker compose -f docker-compose.prod.yml build --no-cache
 	@echo "$(GREEN)✓ Production images rebuilt$(NC)"
 
 ##@ Docker - Management
 
 docker-down: ## Stop all Docker containers
 	@echo "$(YELLOW)Stopping Docker containers...$(NC)"
-	-cd deployment/dev && docker compose down 2>/dev/null || true
-	-cd deployment/dashboard/compose && docker compose -f docker-compose.prod.yml down 2>/dev/null || true
+	-cd deployment/dashboard && docker compose -f docker-compose.dev.yml down 2>/dev/null || true
+	-cd deployment/dashboard && docker compose -f docker-compose.prod.yml down 2>/dev/null || true
 	@echo "$(GREEN)✓ Containers stopped$(NC)"
 
 docker-clean: ## Remove all Docker containers, volumes, and images
 	@echo "$(RED)Cleaning Docker resources...$(NC)"
-	-cd deployment/dev && docker compose down -v 2>/dev/null || true
-	-cd deployment/dashboard/compose && docker compose -f docker-compose.prod.yml down -v 2>/dev/null || true
+	-cd deployment/dashboard && docker compose -f docker-compose.dev.yml down -v 2>/dev/null || true
+	-cd deployment/dashboard && docker compose -f docker-compose.prod.yml down -v 2>/dev/null || true
 	@echo "$(GREEN)✓ Docker resources cleaned$(NC)"
 
 docker-ps: ## Show running Docker containers

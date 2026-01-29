@@ -141,8 +141,8 @@ You need a PostgreSQL instance running. Options:
 #### Option A: Use Docker Compose (Recommended)
 
 ```bash
-cd deployment/dev
-docker compose up -d postgres
+cd deployment/dashboard
+docker compose -f docker-compose.dev.yml up -d postgres
 ```
 
 #### Option B: Local PostgreSQL
@@ -210,6 +210,10 @@ The development environment includes:
 # Start all services
 make docker-dev
 
+# Or manually
+cd deployment/dashboard
+docker compose -f docker-compose.dev.yml up -d
+
 # View logs
 make docker-dev-logs
 
@@ -232,6 +236,10 @@ Test the production build locally:
 # Build and start production environment
 make docker-prod
 
+# Or manually
+cd deployment/dashboard
+docker compose -f docker-compose.prod.yml up -d
+
 # View logs
 make docker-prod-logs
 
@@ -243,7 +251,7 @@ make docker-down
 ```
 
 **Services:**
-- Dashboard: http://localhost:80 (served via nginx)
+- Dashboard: http://localhost:8080 (served via nginx)
 
 ### Docker Commands Reference
 

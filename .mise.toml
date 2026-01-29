@@ -34,8 +34,12 @@ run = "rm -rf node_modules apps/*/node_modules apps/*/dist apps/dashboard/dist"
 
 [tasks.docker-dev]
 description = "Start development environment with Docker"
-run = "cd deployment/dev && docker compose up -d"
+run = "cd deployment/dashboard && docker compose -f docker-compose.dev.yml up -d"
+
+[tasks.docker-prod]
+description = "Start production environment with Docker"
+run = "cd deployment/dashboard && docker compose -f docker-compose.prod.yml up -d"
 
 [tasks.docker-down]
 description = "Stop all Docker containers"
-run = "cd deployment/dev && docker compose down || cd ../dashboard/compose && docker compose -f docker-compose.prod.yml down"
+run = "cd deployment/dashboard && docker compose -f docker-compose.dev.yml down || docker compose -f docker-compose.prod.yml down"
