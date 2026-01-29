@@ -149,6 +149,13 @@ db-seed: ## Seed database with sample data
 	cd apps/api && npm run seed
 	@echo "$(GREEN)✓ Database seeded$(NC)"
 
+##@ Deployment
+
+deploy-pi: ## Deploy to Raspberry Pi (interactive)
+	@echo "$(BLUE)Deploying to Raspberry Pi...$(NC)"
+	@cd deployment/dashboard/scripts && ./deploy_pi.sh
+	@echo "$(GREEN)✓ Deployment complete$(NC)"
+
 ##@ Utilities
 
 update-deps: ## Update dependencies

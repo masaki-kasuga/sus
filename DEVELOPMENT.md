@@ -442,10 +442,108 @@ Add to `.vscode/settings.json`:
 
 The same extensions and settings work for Cursor.
 
+## Deployment to Raspberry Pi
+
+### Automated Deployment
+
+Deploy built applications to Raspberry Pi using the automated script:
+
+```bash
+# From project root
+cd deployment/dashboard/scripts
+./deploy_pi.sh
+```
+
+The script will:
+1. Build frontend and backend locally
+2. Connect to Raspberry Pi via SSH
+3. Upload built files and configurations
+4. Install production dependencies
+5. Restart services
+
+### What You Need
+
+**Before deploying:**
+
+1. **Environment file**: Create `apps/api/.env.pi` with production settings
+   ```env
+   PORT=3000
+   NODE_ENV=production
+   DB_HOST=localhost
+   DB_PORT=5432
+   DB_NAME=waste_management
+   DB_USER=postgres
+   DB_PASSWORD=your_password
+   ```
+
+2. **SSH access** to your Raspberry Pi
+   - Hostname/IP or SORACOM Napter URL
+   - SSH port
+   - Username
+
+3. **Raspberry Pi setup:**
+   - Node.js installed
+   - PostgreSQL installed and configured
+   - nginx installed
+   - Systemd service configured
+
+### Deployment Flow
+
+```
+Local Machine                    Raspberry Pi
+─────────────                    ────────────
+1. npm run build                 
+   (frontend + backend)          
+                                 
+2. SSH connect          ──────>  
+                                 
+3. Upload files         ──────>  /opt/waste-dashboard/
+   - dist/                       ├── frontend/dist/
+   - package.json                └── backend/
+   - .env                            ├── dist/
+   - nginx config                    ├── data/
+                                     └── .env
+                                 
+4. Install & restart    ──────>  npm ci --omit=dev
+                                 systemctl restart waste-backend
+                                 systemctl reload nginx
+```
+
+### Quick Deploy
+
+```bash
+# One-command deployment
+make deploy-pi    # (if added to Makefile)
+
+# Or manually
+cd deployment/dashboard/scripts
+./deploy_pi.sh
+```
+
+### Manual Build and Deploy
+
+If you prefer manual control:
+
+```bash
+# 1. Build locally
+npm run build:api
+npm run build:dashboard
+
+# 2. Copy to Pi
+scp -r apps/dashboard/dist pi@your-pi:/opt/waste-dashboard/frontend/
+scp -r apps/api/dist pi@your-pi:/opt/waste-dashboard/backend/
+
+# 3. On Pi: install and restart
+ssh pi@your-pi "cd /opt/waste-dashboard/backend && npm ci --omit=dev && sudo systemctl restart waste-backend"
+```
+
+For detailed deployment documentation, see [deployment/dashboard/README.md](deployment/dashboard/README.md#deployment-to-raspberry-pi).
+
 ## Additional Resources
 
 - [API README](apps/api/README.md)
 - [Dashboard README](apps/dashboard/README.md)
+- [Deployment Guide](deployment/dashboard/README.md)
 - [API Specifications](docs/specs/api/README.md)
 - [Hardware Specifications](docs/specs/hardware/README.md)
 
@@ -453,4 +551,5 @@ The same extensions and settings work for Cursor.
 
 - Check the [main README](README.md)
 - Review this development guide
+- Check [deployment documentation](deployment/dashboard/README.md)
 - Check [GitHub Issues](https://github.com/masaki-kasuga/sus/issues)
