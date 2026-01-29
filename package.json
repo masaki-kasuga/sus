@@ -1,0 +1,27 @@
+{
+  "name": "sustainability-iot-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "IoT Monorepo for Raspberry Pi, M5Stack, Dashboard, and AI",
+  "workspaces": [
+    "apps/*",
+    "devices/*",
+    "shared/*"
+  ],
+  "scripts": {
+    "dev": "echo 'Select a specific app to run'",
+    "build": "echo 'Building all packages'",
+    "test": "echo 'Running tests'",
+    "lint": "echo 'Running linter'"
+  },
+  "keywords": [
+    "iot",
+    "monorepo",
+    "raspberry-pi",
+    "m5stack",
+    "dashboard",
+    "ai"
+  ],
+  "author": "",
+  "license": "MIT"
+}

@@ -1,0 +1,35 @@
+# Sustainability IoT Monorepo
+
+A monorepo for managing IoT devices, dashboards, and AI implementations
+
+## 📁 Folder Structure
+
+```
+sustainability/
+├── apps/                    # Applications
+│   ├── dashboard/          # Web Dashboard (Frontend)
+│   ├── api/                # Backend API
+│   └── ai/                 # AI/ML Models and Services
+│
+├── devices/                # IoT Device Implementations
+│   ├── raspi/              # Raspberry Pi Programs
+│   └── m5/                 # M5Stack/M5StickC Programs
+│
+├── shared/                 # Shared Libraries
+│   ├── types/              # Common Type Definitions
+│   ├── utils/              # Utility Functions
+│   └── config/             # Configuration Files
+│
+└── docs/                   # Documentation
+    └── specs/              # Specifications
+        ├── hardware/       # Hardware Specifications
+        └── api/            # API Specifications
+```
+
+## 🚀 Getting Started
+
+Refer to the README of each project.
+
+## 📦 Package Management
+
+This monorepo manages multiple packages centrally.

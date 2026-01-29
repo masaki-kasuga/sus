@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: postgres:17.4
+    container_name: waste-postgres-dev
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: waste_management
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres_dev_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - waste_pgdata:/var/lib/postgresql/data
+      - ./postgres/init:/docker-entrypoint-initdb.d:ro
+
+volumes:
+  waste_pgdata:
