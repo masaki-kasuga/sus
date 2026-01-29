@@ -1,25 +1,28 @@
 # Dashboard
 
-Web dashboard for visualizing IoT device data
+Web dashboard (Vite + React) for visualizing IoT device data
 
 ## Overview
 
-Provides features such as real-time sensor data display, historical graphs, and alert management.
+Provides real-time sensor data display and historical charts, backed by `apps/api`.
 
 ## Tech Stack
 
-- Frontend Framework: (React/Vue/Next.js, etc.)
-- Chart Library: (Chart.js/D3.js, etc.)
-- Real-time Communication: WebSocket/SSE
+- React + Vite
+- TypeScript
 
-## Setup
+## Local Setup (npm)
 
 ```bash
 cd apps/dashboard
+cp example.env .env.local
 npm install
 npm run dev
 ```
 
-## Development
+## Local Setup (Docker Compose)
 
-Refer to the development documentation for details.
+```bash
+cd deployment/dashboard/compose
+docker compose -f docker-compose.yml up -d
+```

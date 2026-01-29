@@ -1,0 +1,131 @@
+{
+  "timestamp": "2025/12/02 15:00",
+  "wasteCategories": [
+    {
+      "title": "CategoryA",
+      "sensors": [
+        {
+          "name": "再生紙",
+          "percentage": 25,
+          "active": true
+        },
+        {
+          "name": "両面印刷・雑誌",
+          "percentage": 25,
+          "active": true
+        },
+        {
+          "name": "空き瓶",
+          "percentage": 75,
+          "active": true
+        },
+        {
+          "name": "樹脂・ゴムくず",
+          "percentage": 25,
+          "active": true
+        },
+        {
+          "name": "廃くず",
+          "percentage": 85,
+          "active": true
+        },
+        {
+          "name": "可燃物",
+          "percentage": 25,
+          "active": false
+        }
+      ],
+      "path": "/waste/A"
+    },
+    {
+      "title": "CategoryB",
+      "sensors": [
+        {
+          "name": "再生紙",
+          "percentage": 30,
+          "active": true
+        },
+        {
+          "name": "両面印刷・雑誌",
+          "percentage": 20,
+          "active": true
+        },
+        {
+          "name": "空き瓶",
+          "percentage": 45,
+          "active": true
+        },
+        {
+          "name": "樹脂・ゴムくず",
+          "percentage": 35,
+          "active": true
+        },
+        {
+          "name": "廃くず",
+          "percentage": 28,
+          "active": true
+        },
+        {
+          "name": "可燃物",
+          "percentage": 15,
+          "active": false
+        }
+      ],
+      "path": "/waste/B"
+    }
+  ],
+  "products": [
+    {
+      "title": "ProductA",
+      "product": {
+        "name": "加工品A",
+        "weight": 25,
+        "active": true
+      },
+      "path": "/product/A"
+    },
+    {
+      "title": "ProductB",
+      "product": {
+        "name": "加工品B",
+        "weight": 135,
+        "active": true
+      },
+      "path": "/product/B"
+    }
+  ],
+  "mapMarkers": [
+    {
+      "id": "product-a",
+      "name": "加工品Aスペース",
+      "x": 25,
+      "y": 30,
+      "type": "product",
+      "place": "A"
+    },
+    {
+      "id": "waste-a",
+      "name": "分類ゴミA",
+      "x": 45,
+      "y": 50,
+      "type": "waste",
+      "place": "A"
+    },
+    {
+      "id": "waste-b",
+      "name": "分類ゴミB",
+      "x": 70,
+      "y": 50,
+      "type": "waste",
+      "place": "B"
+    },
+    {
+      "id": "product-b",
+      "name": "加工品B",
+      "x": 75,
+      "y": 30,
+      "type": "product",
+      "place": "B"
+    }
+  ]
+}

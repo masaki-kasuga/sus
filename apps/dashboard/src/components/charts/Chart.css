@@ -1,0 +1,342 @@
+.modern-chart-container {
+  width: 100%;
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+}
+
+.modern-chart-tooltip {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 180px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.2);
+  padding: 12px 16px;
+  backdrop-filter: blur(6px);
+}
+
+.modern-chart-tooltip-date {
+  font-weight: 700;
+  color: #111827;
+}
+
+.modern-chart-tooltip-total {
+  font-size: 13px;
+  color: #1f2937;
+}
+
+.modern-chart-tooltip-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.modern-chart-tooltip-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #374151;
+}
+
+.modern-chart-tooltip-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+}
+
+.modern-chart-tooltip-label {
+  flex: 1;
+  font-weight: 600;
+}
+
+.modern-gauge-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 15px;
+}
+
+.gauge-wrapper {
+  position: relative;
+  width: 140px;
+  height: 90px; /* 半円なので高さを半分に */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gauge-center {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+}
+
+.gauge-percentage {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+  line-height: 1.2;
+}
+
+.gauge-label {
+  font-size: 11px;
+  color: #6b7280;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* TimeSeriesLineChart */
+.time-series-chart {
+  width: 100%;
+}
+
+.chart-header-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.date-picker-toggle {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  min-width: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.date-picker-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.15);
+}
+
+.play-pause-button {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px -2px rgba(16, 185, 129, 0.3);
+  min-width: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.play-pause-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px -2px rgba(16, 185, 129, 0.4);
+}
+
+.play-pause-button.playing {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  box-shadow: 0 4px 8px -2px rgba(245, 158, 11, 0.3);
+}
+
+.play-pause-button.playing:hover {
+  box-shadow: 0 6px 16px -2px rgba(245, 158, 11, 0.4);
+}
+
+.date-range-display {
+  margin-left: auto;
+  font-size: 14px;
+  color: #374151;
+  font-weight: 600;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+}
+
+.date-picker-panel {
+  margin-bottom: 20px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.date-inputs {
+  display: flex;
+  align-items: end;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.date-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.date-input-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  letter-spacing: -0.01em;
+}
+
+.date-input {
+  padding: 10px 14px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  color: #1f2937;
+  background: white;
+  transition: all 0.3s ease;
+  min-width: 160px;
+}
+
+.date-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.reset-date-button {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  align-self: flex-end;
+}
+
+.reset-date-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.15);
+}
+
+.chart-wrapper {
+  position: relative;
+}
+
+.time-cursor {
+  position: absolute;
+  pointer-events: none;
+}
+
+.cursor-handle {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(102, 126, 234, 0.6);
+  border: 2px solid white;
+}
+
+/* Nivo tooltip z-index fix */
+.nivo-tooltip {
+  z-index: 10010 !important;
+}
+
+
+.calendar-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  font-weight: 600;
+  color: #666;
+}
+
+.calendar-week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.calendar-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80px;
+  position: relative;
+}
+
+.calendar-day.empty {
+  min-height: 80px;
+}
+
+.gradient-bubble-calendar {
+  padding: 20px;
+}
+
+.gradient-bubble-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 70px;
+  margin: 15px 0;
+}
+
+.gradient-bubble-layer {
+  position: absolute;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.bubble-pop {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translate(-50%, 0) scale(0.92);
+  background: rgba(37, 99, 235, 0.92);
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.2);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.calendar-day:hover .bubble-pop {
+  opacity: 1;
+  transform: translate(-50%, -6px) scale(1);
+}
