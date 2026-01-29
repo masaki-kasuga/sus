@@ -1,0 +1,41 @@
+[tools]
+node = "20.20.0"
+# Uncomment if you need other tools
+# python = "3.12"
+# go = "1.22"
+
+[env]
+NODE_ENV = "development"
+NPM_CONFIG_UPDATE_NOTIFIER = "false"
+
+[tasks.install]
+description = "Install all dependencies"
+run = "npm install"
+
+[tasks.dev-api]
+description = "Start API development server"
+run = "npm run dev --workspace=apps/api"
+
+[tasks.dev-dashboard]
+description = "Start Dashboard development server"
+run = "npm run dev --workspace=apps/dashboard"
+
+[tasks.build]
+description = "Build all applications"
+run = "npm run build"
+
+[tasks.lint]
+description = "Run linter on all workspaces"
+run = "npm run lint"
+
+[tasks.clean]
+description = "Clean build artifacts and dependencies"
+run = "rm -rf node_modules apps/*/node_modules apps/*/dist apps/dashboard/dist"
+
+[tasks.docker-dev]
+description = "Start development environment with Docker"
+run = "cd deployment/dev && docker compose up -d"
+
+[tasks.docker-down]
+description = "Stop all Docker containers"
+run = "cd deployment/dev && docker compose down || cd ../dashboard/compose && docker compose -f docker-compose.prod.yml down"
