@@ -1,0 +1,85 @@
+services:
+  backend:
+    build:
+      context: ../../apps/api
+      dockerfile: Dockerfile.dev
+    env_file:
+      - ../../apps/api/.env.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../../apps/api/src:/app/src
+      - ../../apps/api/data:/app/data
+    networks:
+      - waste-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/health').then(()=>process.exit(0)).catch(()=>process.exit(1))"]
+      interval: 15s
+      timeout: 2s
+      retries: 20
+      start_period: 10s
+
+  frontend:
+    build:
+      context: ../../apps/dashboard
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_TARGET=http://backend:3000
+    volumes:
+      - ../../apps/dashboard/src:/app/src
+      - ../../apps/dashboard/public:/app/public
+      - ../../apps/dashboard/index.html:/app/index.html
+      - ../../apps/dashboard/vite.config.ts:/app/vite.config.ts
+    depends_on:
+      - backend
+    networks:
+      - waste-network
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:17.7
+    environment:
+      POSTGRES_DB: waste_management
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - waste_pgdata:/var/lib/postgresql/data
+    networks:
+      - waste-network
+    restart: unless-stopped
+
+  pg_seed:
+    image: postgres:17.7
+    depends_on:
+      - postgres
+    environment:
+      PGPASSWORD: postgres
+    volumes:
+      - ../postgres/init:/seed:ro
+    networks:
+      - waste-network
+    entrypoint: ["bash", "-lc"]
+    command: >
+      "
+      until pg_isready -h postgres -p 5432 -U postgres -d waste_management; do
+        echo 'waiting for postgres...';
+        sleep 1;
+      done;
+
+      psql -h postgres -U postgres -d waste_management -f /seed/00_schema.sql;
+      psql -h postgres -U postgres -d waste_management -f /seed/10_seed.sql;
+
+      echo 'seed done';
+      "
+
+networks:
+  waste-network:
+    driver: bridge
+
+volumes:
+  waste_pgdata:

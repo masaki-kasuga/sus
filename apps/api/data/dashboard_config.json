@@ -1,0 +1,153 @@
+{
+    "sensors": [
+        {
+            "name": "XiaoESP32C3-LOADCELL_11",
+            "display_name": "Assy",
+            "place_name": "I-K3_defective_assembly",
+            "display_order": 1,
+            "category": "Assy"
+        },
+        {
+            "name": "XiaoESP32C3-LOADCELL_12",
+            "display_name": "単品",
+            "place_name": "I-K3_defective_parts",
+            "display_order": 1,
+            "category": "Parts"
+        },
+        {
+            "name": "XiaoESP32C3-VL53L1X_3",
+            "display_name": "小電気部品",
+            "place_name": "A-A'6_waste",
+            "display_order": 3,
+            "category": "小電気部品"
+        },
+        {
+            "name": "XiaoESP32C3-VL53L1X_4",
+            "display_name": "ガラスくず",
+            "place_name": "A-A'6_waste",
+            "display_order": 4,
+            "category": "ガラスくず"
+        },
+        {
+            "name": "XiaoESP32C3-VL53L1X_5",
+            "display_name": "電線くず（右）",
+            "place_name": "A-A'6_waste",
+            "display_order": 2,
+            "category": "電線くず"
+        },
+        {
+            "name": "XiaoESP32C3-VL53L1X_6",
+            "display_name": "電池",
+            "place_name": "A-A'6_waste",
+            "display_order": 5,
+            "category": "電池"
+        },
+        {
+            "name": "XiaoESP32C3-VL53L1X_7",
+            "display_name": "電線くず（左）",
+            "place_name": "A-A'6_waste",
+            "display_order": 1,
+            "category": "電線くず"
+        },
+        {
+            "name": "XiaoESP32C3-VL53L1X_8",
+            "display_name": "木くず",
+            "place_name": "A-A'6_waste",
+            "display_order": 6,
+            "category": "木くず"
+        },
+        {
+            "name": "XiaoESP32C3-VL53L1X_9",
+            "display_name": "樹脂・\nゴムくず",
+            "place_name": "R-T4_waste",
+            "display_order": 1,
+            "category": "樹脂・ゴムくず"
+        },
+        {
+            "name": "XiaoESP32C3-VL53L1X_10",
+            "display_name": "段ボール",
+            "place_name": "R-T4_waste",
+            "display_order": 2,
+            "category": "段ボール"
+        },
+        {
+            "name": "XiaoESP32C3-VL53L1X_11",
+            "display_name": "再生紙",
+            "place_name": "R-T4_waste",
+            "display_order": 3,
+            "category": "再生紙"
+        },
+        {
+            "name": "XiaoESP32C3-VL53L1X_12",
+            "display_name": "複合品",
+            "place_name": "R-T4_waste",
+            "display_order": 4,
+            "category": "複合品"
+        },
+        {
+            "name": "XiaoESP32C3-VL53L1X_13",
+            "display_name": "空き缶",
+            "place_name": "R-T4_waste",
+            "display_order": 5,
+            "category": "空き缶"
+        },
+        {
+            "name": "XiaoESP32C3-VL53L1X_14",
+            "display_name": "ペットボトル",
+            "place_name": "R-T4_waste",
+            "display_order": 6,
+            "category": "ペットボトル"
+        }
+    ],
+    "places": [
+        {
+            "name": "I-K3_defective_assembly",
+            "display_name": "I-K3材加不\n（Assy）",
+            "x": 39,
+            "y": 63,
+            "type": "product",
+            "path": "/product/A",
+            "marker_name": "I-K3"
+        },
+        {
+            "name": "I-K3_defective_parts",
+            "display_name": "I-K3材加不\n（単品）",
+            "x": 39,
+            "y": 65,
+            "type": "product",
+            "path": "/product/B",
+            "marker_name": "I-K3"
+        },
+        {
+            "name": "A-A'6_waste",
+            "display_name": "A-A'6ゴミ箱",
+            "type": "waste",
+            "path": "/waste/A",
+            "marker_name": "A-A'6"
+        },
+        {
+            "name": "R-T4_waste",
+            "display_name": "R-T4ゴミ箱",
+            "type": "waste",
+            "path": "/waste/B",
+            "marker_name": "R-T4"
+        }
+    ],
+    "markers": [
+        {
+            "name": "I-K3",
+            "x": 37,
+            "y": 63
+        },
+        {
+            "name": "A-A'6",
+            "x": 54,
+            "y": 12
+        },
+        {
+            "name": "R-T4",
+            "x": 39,
+            "y": 83
+        }
+    ]
+}

@@ -1,0 +1,129 @@
+.product-detail-page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  gap: 20px;
+}
+
+.page-header h2 {
+  font-size: 32px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.03em;
+  margin-bottom: 8px;
+}
+
+.page-description {
+  margin: 0;
+  font-size: 14px;
+  color: #475569;
+  letter-spacing: 0.01em;
+}
+
+.product-switcher {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.product-link {
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #6b7280;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.product-link:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.product-link.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.product-section {
+  margin-bottom: 48px;
+  padding-bottom: 40px;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.product-section:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.graph-section-heading {
+  font-size: 28px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  margin-bottom: 32px;
+}
+
+.product-section-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+
+.product-chart-layout {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.product-calendar-layout {
+  display: grid;
+  /* grid-template-columns: 1.2fr 0.8fr; */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
+
+.product-calendar-column {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+}
+
+.product-calendar-card {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-calendar-card .graph-card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 1024px) {
+  .product-chart-layout,
+  .product-calendar-layout {
+    grid-template-columns: 1fr;
+  }
+}
