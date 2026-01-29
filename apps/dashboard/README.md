@@ -11,16 +11,7 @@ Provides real-time sensor data display and historical charts, backed by `apps/ap
 - React + Vite
 - TypeScript
 
-## Local Setup (npm)
-
-```bash
-cd apps/dashboard
-cp example.env .env.local
-npm install
-npm run dev
-```
-
-## Local Setup (Docker Compose)
+## Local Setup (Docker Compose - Recommended)
 
 ```bash
 cd deployment/dashboard/compose

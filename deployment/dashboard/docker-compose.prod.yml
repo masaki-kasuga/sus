@@ -29,7 +29,7 @@ services:
   frontend_build:
     build:
       context: ../../apps/dashboard
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     environment:
       - VITE_API_TARGET=/api
     volumes:
