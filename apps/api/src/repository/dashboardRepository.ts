@@ -50,9 +50,9 @@ export function loadDeviceConfig(): DeviceConfigForDashboard {
 function parseDashboardConfig(json: unknown): DeviceConfigForDashboard {
   if (!isObject(json)) throw new Error("Invalid dashboard config root: not an object");
 
-  const sensorsRaw = (json as Record<string, unknown>)["sensors"];
-  const placesRaw = (json as Record<string, unknown>)["places"];
-  const markersRaw = (json as Record<string, unknown>)["markers"];
+  const sensorsRaw = json["sensors"];
+  const placesRaw = json["places"];
+  const markersRaw = json["markers"];
 
   if (!Array.isArray(sensorsRaw)) throw new Error("Invalid dashboard config: sensors must be array");
   if (!Array.isArray(placesRaw)) throw new Error("Invalid dashboard config: places must be array");

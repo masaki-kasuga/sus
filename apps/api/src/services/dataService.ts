@@ -8,7 +8,7 @@ const dataDir = path.join(process.cwd(), 'data');
 export const loadDashboardData = (): DashboardData => {
   const filePath = path.join(dataDir, 'dashboard.json');
   const data = fs.readFileSync(filePath, 'utf-8');
-  return JSON.parse(data);
+  return JSON.parse(data) as DashboardData;
 };
 
 interface RawLineChartRecord {
@@ -87,7 +87,7 @@ const buildLineChart = (records: RawLineChartRecord[]) => {
     }
 
     if (!seriesMap.has(record.waste_name)) {
-      seriesMap.set(record.waste_name, Array(dates.length).fill(0));
+      seriesMap.set(record.waste_name, Array(dates.length).fill(0) as number[]);
     }
 
     const dataPoints = seriesMap.get(record.waste_name);
@@ -106,7 +106,7 @@ const buildLineChart = (records: RawLineChartRecord[]) => {
 export const loadWasteDetailData = (category: 'A' | 'B'): WasteDetailData => {
   const filePath = path.join(dataDir, 'waste_detail.json');
   const data = fs.readFileSync(filePath, 'utf-8');
-  const parsed: RawWasteDetailData = JSON.parse(data);
+  const parsed = JSON.parse(data) as RawWasteDetailData;
 
   const lineChartRecords = parsed.line_chart_records.filter(
     (record) => record.category_id === category,
@@ -143,6 +143,6 @@ export const loadWasteDetailData = (category: 'A' | 'B'): WasteDetailData => {
 export const loadProductDetailData = (product: 'A' | 'B'): ProductDetailData => {
   const filePath = path.join(dataDir, 'product_detail.json');
   const data = fs.readFileSync(filePath, 'utf-8');
-  const allData = JSON.parse(data);
+  const allData = JSON.parse(data) as { productA: ProductDetailData; productB: ProductDetailData };
   return allData[product === 'A' ? 'productA' : 'productB'];
 };
