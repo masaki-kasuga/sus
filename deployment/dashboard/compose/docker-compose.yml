@@ -1,15 +1,15 @@
 services:
   backend:
     build:
-      context: ../../apps/api
+      context: ../../../apps/api
       dockerfile: Dockerfile.dev
     env_file:
-      - ../../apps/api/.env.dev
+      - ../../../apps/api/.env.dev
     ports:
       - "3000:3000"
     volumes:
-      - ../../apps/api/src:/app/src
-      - ../../apps/api/data:/app/data
+      - ../../../apps/api/src:/app/src
+      - ../../../apps/api/data:/app/data
     networks:
       - waste-network
     restart: unless-stopped
@@ -22,17 +22,17 @@ services:
 
   frontend:
     build:
-      context: ../../apps/dashboard
+      context: ../../../apps/dashboard
       dockerfile: Dockerfile.dev
     ports:
       - "5173:5173"
     environment:
       - VITE_API_TARGET=http://backend:3000
     volumes:
-      - ../../apps/dashboard/src:/app/src
-      - ../../apps/dashboard/public:/app/public
-      - ../../apps/dashboard/index.html:/app/index.html
-      - ../../apps/dashboard/vite.config.ts:/app/vite.config.ts
+      - ../../../apps/dashboard/src:/app/src
+      - ../../../apps/dashboard/public:/app/public
+      - ../../../apps/dashboard/index.html:/app/index.html
+      - ../../../apps/dashboard/vite.config.ts:/app/vite.config.ts
     depends_on:
       - backend
     networks:
@@ -40,13 +40,13 @@ services:
     restart: unless-stopped
 
   postgres:
+    ports:
+      - "5432:5432"
     image: postgres:17.7
     environment:
       POSTGRES_DB: waste_management
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-    ports:
-      - "5432:5432"
     volumes:
       - waste_pgdata:/var/lib/postgresql/data
     networks:
