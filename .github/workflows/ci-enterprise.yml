@@ -1,0 +1,130 @@
+name: CI (Enterprise-Compatible)
+
+# 会社のリポジトリ用：Read-only権限で動作するCI/CDワークフロー
+# 制限事項：
+# - Workflow permissions: Read repository のみ
+# - PR作成/承認: 不可
+# - 使用可能なActions: GitHub公式 + 承認されたもののみ
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  api:
+    name: API - Lint & Build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read  # 明示的にread権限のみ
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4  # GitHub公式 - 確実に動作
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4  # GitHub公式 - 確実に動作
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint API
+        run: npm run lint:api
+
+      - name: Build API
+        run: npm run build:api
+
+      - name: Check for vulnerabilities
+        working-directory: apps/api
+        run: npm audit --audit-level=moderate
+        continue-on-error: true
+
+  dashboard:
+    name: Dashboard - Lint & Build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read  # 明示的にread権限のみ
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint Dashboard
+        run: npm run lint:dashboard
+
+      - name: Build Dashboard
+        run: npm run build:dashboard
+
+      - name: Check for vulnerabilities
+        working-directory: apps/dashboard
+        run: npm audit --audit-level=moderate
+        continue-on-error: true
+
+  # セキュリティスキャン（Trivyが許可されていない場合はコメントアウト）
+  # 会社のActions許可リストに「aquasecurity/trivy-action」が含まれているか確認が必要
+  security:
+    name: Security Scan (Trivy)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # security-events: write  # SARIF uploadには必要だが、Read-only制限下では不可
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Trivyが許可されていない場合は、このステップをコメントアウト
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.29.0
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'table'  # SARIFではなくtable形式（security-events権限不要）
+          severity: 'CRITICAL,HIGH'
+
+      # SARIF uploadは「security-events: write」権限が必要なので、
+      # Read-only制限下では使用不可
+      # - name: Upload Trivy results to GitHub Security tab
+      #   uses: github/codeql-action/upload-sarif@v3
+      #   if: always()
+      #   with:
+      #     sarif_file: 'trivy-results.sarif'
+
+  # npm auditによる代替セキュリティチェック
+  # Trivyが使えない場合の代替手段
+  security-npm:
+    name: Security Scan (npm audit)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run npm audit
+        run: npm audit --audit-level=moderate
+        continue-on-error: true  # 脆弱性があってもCIは継続
