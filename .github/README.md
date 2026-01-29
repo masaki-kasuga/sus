@@ -395,6 +395,248 @@ Release Pleaseが作成するPR:
 
 ---
 
+## 📝 Release Pleaseの実際の使い方
+
+### 初回セットアップ（必須）
+
+**GitHub Actions にPR作成権限を付与：**
+
+1. リポジトリ設定を開く：
+   ```bash
+   https://github.com/<owner>/<repo>/settings/actions
+   ```
+
+2. **Workflow permissions** で以下を選択：
+   - ✅ **"Read and write permissions"**
+   - ✅ **"Allow GitHub Actions to create and approve pull requests"**
+
+3. **Save** をクリック
+
+**この設定をしないとRelease PRが作成されません！**
+
+---
+
+### 日常的な使い方（ステップバイステップ）
+
+#### ステップ1: Conventional Commitsでコミット
+
+```bash
+# 新機能の追加（マイナーバージョンアップ）
+git commit -m "feat(api): add user authentication"
+
+# バグ修正（パッチバージョンアップ）
+git commit -m "fix(dashboard): correct calculation error"
+
+# 破壊的変更（メジャーバージョンアップ）
+git commit -m "feat!(api): change API response format
+
+BREAKING CHANGE: response now returns array instead of object"
+```
+
+**重要:** `apps/api` または `apps/dashboard` 配下のファイルを変更する必要があります。`.github/`の変更だけではリリースは作成されません。
+
+#### ステップ2: mainブランチにマージ
+
+```bash
+# PR経由でマージ（推奨）
+gh pr create --title "feat(api): add user authentication"
+gh pr merge <PR番号> --squash
+
+# または直接push（非推奨）
+git push origin main
+```
+
+#### ステップ3: Release PRが自動作成される
+
+数秒後、Release Pleaseが以下を作成します：
+
+- **Release PR**: `chore: release main`
+- **内容**: バージョンアップ、CHANGELOG、package.json更新
+
+```bash
+# Release PRを確認
+gh pr list --label "autorelease: pending"
+
+# または
+gh pr list | grep "chore: release"
+```
+
+#### ステップ4: Release PRの内容を確認
+
+```bash
+# PRの詳細を表示
+gh pr view <Release PR番号>
+
+# 確認ポイント:
+# ✅ バージョン番号が正しいか（1.0.0 → 1.1.0）
+# ✅ CHANGELOGが正確か
+# ✅ 全ての変更が含まれているか
+```
+
+#### ステップ5: Release PRをマージ
+
+```bash
+gh pr merge <Release PR番号> --squash
+```
+
+**マージすると自動的に：**
+- ✅ GitHubリリースが作成される
+- ✅ Gitタグが作成される（`api-v1.1.0`）
+- ✅ `release-please-manifest.json`が更新される
+
+#### ステップ6: リリースを確認
+
+```bash
+# リリース一覧を表示
+gh release list
+
+# 特定のリリースを表示
+gh release view api-v1.1.0
+
+# ブラウザで確認
+gh repo view --web
+# → "Releases" タブをクリック
+```
+
+---
+
+### 設定ファイルの役割
+
+| ファイル | 役割 | 編集方法 |
+|---------|------|---------|
+| **`release-please-config.json`** | **設定ファイル** | ✅ 手動で編集可能 |
+| **`release-please-manifest.json`** | **現在のバージョン記録** | ❌ Release Pleaseが自動更新（触らない） |
+
+#### `release-please-config.json`（設定）
+
+```json
+{
+  "include-component-in-tag": true,     // タグ名: api-v1.0.0
+  "tag-separator": "-",                  // セパレータ
+  "packages": {
+    "apps/dashboard": {
+      "release-type": "node",            // Node.jsプロジェクト
+      "component": "dashboard"           // コンポーネント名
+    },
+    "apps/api": {
+      "release-type": "node",
+      "component": "api"
+    }
+  }
+}
+```
+
+#### `release-please-manifest.json`（バージョン記録）
+
+```json
+{
+  "apps/dashboard": "1.0.0",  // Release Pleaseが自動更新
+  "apps/api": "1.1.0"          // 手動で変更しても意味がない
+}
+```
+
+**重要:** `manifest.json`を直接編集してもバージョンは変わりません。Conventional Commitsでコミットしてください。
+
+---
+
+### よくある問題と解決方法
+
+#### 問題1: Release PRが作成されない
+
+**原因:**
+- GitHub Actionsの権限が不足
+- `apps/`配下のファイルが変更されていない
+- Conventional Commits形式でコミットしていない
+
+**解決方法:**
+
+```bash
+# 1. 権限を確認
+# Settings → Actions → Workflow permissions
+# → "Read and write permissions" + "Allow PR creation"
+
+# 2. 実際に変更があるか確認
+git log --oneline -5 | grep "feat\|fix"
+
+# 3. Release Pleaseログを確認
+gh run list --workflow=release-please.yml --limit 1
+gh run view <run-id> --log | grep "No user facing"
+```
+
+#### 問題2: Releasesに何も表示されない
+
+**原因:** Release PRをまだマージしていない
+
+**解決方法:**
+
+```bash
+# Release PRを探す
+gh pr list --label "autorelease: pending"
+
+# マージする
+gh pr merge <PR番号> --squash
+
+# リリースを確認
+gh release list
+```
+
+#### 問題3: バージョンが意図した通りに変わらない
+
+**原因:** コミットメッセージの形式が間違っている
+
+**解決方法:**
+
+| やりたいこと | 正しいコミットメッセージ |
+|------------|------------------------|
+| マイナーアップ (1.0.0 → 1.1.0) | `feat(api): add new feature` |
+| パッチアップ (1.0.0 → 1.0.1) | `fix(api): bug fix` |
+| メジャーアップ (1.0.0 → 2.0.0) | `feat!(api): breaking change` |
+
+#### 問題4: 複数のパッケージを同時にリリースしたい
+
+**解決方法:**
+
+```bash
+# 両方のディレクトリを変更
+git commit -m "feat(api): add new endpoint"
+git commit -m "feat(dashboard): add new UI component"
+git push
+
+# Release PRに両方の変更が含まれる
+```
+
+---
+
+### 手動実行（トラブルシューティング用）
+
+```bash
+# Release Pleaseを手動で実行
+gh workflow run release-please.yml
+
+# 実行状態を確認
+gh run list --workflow=release-please.yml --limit 1
+
+# ログを確認
+gh run view <run-id> --log
+```
+
+---
+
+### ファイル名の由来
+
+**"Release Please"** = Google製のツール名
+
+- ツール名: **Release Please**（Googleが開発）
+- 設定ファイル: `release-please-config.json`
+- マニフェスト: `release-please-manifest.json`
+
+**ベストプラクティスか？**
+- ✅ Yes、これが公式のデフォルトファイル名
+- ✅ 変更不可（Release Pleaseがこのファイル名を期待）
+- ✅ Google、Microsoft、多くのOSSプロジェクトで使用
+
+---
+
 ## 🔄 ワークフローの連携
 
 ### 典型的な開発フロー
