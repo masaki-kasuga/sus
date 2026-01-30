@@ -21,7 +21,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'javascript-typescript', 'python' ]
+        language: [ 'javascript-typescript' ]
+        # Note: Python analysis is currently disabled because Python code
+        # is in sus-iot/ directory which is not part of this repository.
+        # To enable Python analysis, either:
+        # 1. Move sus-iot/ code into this repository, or
+        # 2. Set up a separate CodeQL workflow in sus-iot/ repository
 
     steps:
     - name: Checkout repository
