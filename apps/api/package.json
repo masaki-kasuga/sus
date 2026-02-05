@@ -26,7 +26,7 @@
     "express-rate-limit": "^7.1.5",
     "express-validator": "^7.0.1",
     "helmet": "^7.1.0",
-    "pg": "8.17.2",
+    "pg": "8.18.0",
     "ws": "^8.14.2"
   },
   "devDependencies": {
